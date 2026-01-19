@@ -53,7 +53,7 @@ Project: Truckventory – Internal Inventory Management System
 🔗 Repository
 
 Full source code available at:
-👉 https://github.com/YOURUSERNAME/truckventory￼
+👉 https://github.com/Akifugudur/Truckventory)
 
 ⸻
 
