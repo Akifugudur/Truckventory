@@ -1,16 +1,62 @@
-# truckventory
+🚛 Truckventory
 
-A new Flutter project.
+Internal Inventory Management App for Truck Parts
 
-## Getting Started
+⸻
 
-This project is a starting point for a Flutter application.
+🧠 Overview
 
-A few resources to get you started if this is your first Flutter project:
+Truckventory is a Flutter-based mobile and web application developed for a family-owned truck spare parts business.
+It helps track parts, manage sales, and analyze performance using Firebase as the backend.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+⸻
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+⚙️ Tech Stack
+	•	Flutter (cross-platform UI)
+	•	Firebase Firestore (real-time database)
+	•	Firebase Auth (authentication)
+	•	FL Chart (data visualization)
+
+⸻
+
+🔑 Core Features
+
+✅ Search for truck parts in inventory
+✅ Add new parts and update stock
+✅ Record sales and track history
+✅ Generate sales analytics (revenue & best-selling parts)
+
+⸻
+
+📊 System Design
+	•	Use Case Diagram – shows user interactions
+	•	Component Diagram – illustrates system architecture
+	•	Class Diagram – defines internal data structure
+
+⸻
+
+🧪 Testing
+
+9 test cases were executed, verifying login, sales, and part management features.
+Minor UI scaling issues identified and planned for next iteration.
+
+⸻
+
+👨‍💻 Developer
+
+Mehmet Akif Üğüdür
+Student ID: 4243805
+Project: Truckventory – Internal Inventory Management System
+
+⸻
+
+🔗 Repository
+
+Full source code available at:
+👉 https://github.com/YOURUSERNAME/truckventory￼
+
+⸻
+
+🧾 License
+
+This project is developed for educational purposes as part of the Software Engineering Project (PSE) course.
