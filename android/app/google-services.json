@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "602124530547",
+    "project_id": "truckventory-79e22",
+    "storage_bucket": "truckventory-79e22.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602124530547:android:d95f6e88221bb742d5cb06",
+        "android_client_info": {
+          "package_name": "com.example.truckventory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASEtq_kp1bqj4WTRdAZnffEq5X6gePIZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
