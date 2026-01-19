@@ -31,13 +31,13 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
     for (var doc in snapshot.docs) {
       final data = doc.data();
-      final partId = data['partId'] ?? 'Unknown';
+      final partName = data['partName'] ?? 'Unknown Part';
       final quantity = (data['quantity'] ?? 0) as int;
       final price = (data['price'] ?? 0).toDouble();
 
       revenue += quantity * price;
       salesCount += quantity;
-      productMap[partId] = (productMap[partId] ?? 0) + quantity;
+      productMap[partName] = (productMap[partName] ?? 0) + quantity;
     }
 
     setState(() {
@@ -55,7 +55,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         barRods: [
           BarChartRodData(
             toY: entry.value.toDouble(),
-            color: Colors.blueGrey,
+            color: Colors.amber,
+            width: 18,
+            borderRadius: BorderRadius.circular(4),
           ),
         ],
         showingTooltipIndicators: [0],
@@ -66,9 +68,20 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-        title: const Text("Sales Analysis"),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: const Color(0xFF1E1E1E),
+        title: const Text(
+          "Sales Analysis",
+          style: TextStyle(
+            color: Colors.amber,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.amber),
+        elevation: 4,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -78,57 +91,119 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             children: [
               const Text(
                 "📊 Overall Statistics",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              Card(
-                elevation: 3,
-                child: ListTile(
-                  title: const Text("Total Sales"),
-                  trailing: Text("$totalSales items"),
-                ),
+
+              // Total Sales & Revenue Cards
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      color: const Color(0xFF1E1E1E),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ListTile(
+                        title: const Text(
+                          "Total Sales",
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        trailing: Text(
+                          "$totalSales pcs",
+                          style: const TextStyle(
+                              color: Colors.amber,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Card(
+                      color: const Color(0xFF1E1E1E),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ListTile(
+                        title: const Text(
+                          "Total Revenue",
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        trailing: Text(
+                          "₺${totalRevenue.toStringAsFixed(2)}",
+                          style: const TextStyle(
+                              color: Colors.amber,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Card(
-                elevation: 3,
-                child: ListTile(
-                  title: const Text("Total Revenue"),
-                  trailing: Text("\$${totalRevenue.toStringAsFixed(2)}"),
-                ),
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
+
               const Text(
                 "🏆 Top Selling Products",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
+
               if (productSales.isEmpty)
-                const Center(child: Text("No sales data yet."))
+                const Center(
+                  child: Text(
+                    "No sales data yet.",
+                    style: TextStyle(color: Colors.white54, fontSize: 16),
+                  ),
+                )
               else
-                SizedBox(
-                  height: 300,
+                Container(
+                  height: 350,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1E1E1E),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: BarChart(
                     BarChartData(
+                      gridData: const FlGridData(show: false),
+                      borderData: FlBorderData(show: false),
                       titlesData: FlTitlesData(
+                        leftTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        rightTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        topTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
                         bottomTitles: AxisTitles(
                           sideTitles: SideTitles(
                             showTitles: true,
+                            reservedSize: 80,
                             getTitlesWidget: (value, meta) {
                               final keys = productSales.keys.toList();
                               if (value.toInt() < keys.length) {
                                 return Transform.rotate(
-                                  angle: -0.5,
-                                  child: Text(keys[value.toInt()],
-                                      style: const TextStyle(fontSize: 10)),
+                                  angle: -0.6,
+                                  child: Text(
+                                    keys[value.toInt()],
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 11,
+                                    ),
+                                  ),
                                 );
                               }
-                              return const Text('');
+                              return const SizedBox();
                             },
                           ),
                         ),
                       ),
                       barGroups: _generateChartData(),
-                      borderData: FlBorderData(show: false),
-                      gridData: const FlGridData(show: false),
                     ),
                   ),
                 ),

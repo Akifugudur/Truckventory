@@ -48,33 +48,56 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-        title: const Text('Truckventory'),
+        backgroundColor: const Color(0xFF1E1E1E),
+        title: const Text(
+          'Truckventory',
+          style: TextStyle(
+            color: Colors.amber,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 6,
+        iconTheme: const IconThemeData(color: Colors.amber),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
           children: [
-            const SizedBox(height: 40),
-            const Icon(Icons.local_shipping, size: 100, color: Colors.blueGrey),
             const SizedBox(height: 10),
+            const Icon(Icons.local_shipping, size: 90, color: Colors.amber),
+            const SizedBox(height: 25),
+
+            // 🔍 Search bar
             TextField(
               controller: _searchController,
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                labelText: 'Search Part by Name',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: _searchPart,
+                hintText: 'Search part by name...',
+                hintStyle: const TextStyle(color: Colors.white54),
+                filled: true,
+                fillColor: const Color(0xFF1F1F1F),
+                prefixIcon: const Icon(Icons.search, color: Colors.amber),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
                 ),
-                border: const OutlineInputBorder(),
               ),
+              onSubmitted: (_) => _searchPart(),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
 
             if (_isSearching)
-              const CircularProgressIndicator()
-            else if (_foundPart == null && _searchController.text.isNotEmpty)
-              const Text('No part found.')
+              const CircularProgressIndicator(color: Colors.amber)
+            else if (_foundPart == null &&
+                _searchController.text.trim().isNotEmpty)
+              const Text(
+                'No part found.',
+                style: TextStyle(color: Colors.white54),
+              )
             else if (_foundPart != null)
               ElevatedButton(
                 onPressed: () {
@@ -85,59 +108,82 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber,
+                  foregroundColor: Colors.black,
+                ),
                 child: const Text('View Part Details'),
               ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 25),
 
-            // 🔹 Main Buttons Section 🔹
+            // 🔹 Main Buttons
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: GridView.count(
+                crossAxisCount: 1,
+                childAspectRatio: 3.3,
+                mainAxisSpacing: 15,
                 children: [
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.add_box),
-                    label: const Text('Add Part'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const AddPartScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50)),
+                  _buildDashboardButton(
+                    context,
+                    icon: Icons.add_box,
+                    label: 'Add Part',
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const AddPartScreen()),
+                    ),
                   ),
-                  const SizedBox(height: 15),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.attach_money),
-                    label: const Text('Sales'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const SalesHistoryScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50)),
+                  _buildDashboardButton(
+                    context,
+                    icon: Icons.attach_money,
+                    label: 'Sales History',
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const SalesHistoryScreen()),
+                    ),
                   ),
-                  const SizedBox(height: 15),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.analytics),
-                    label: const Text('Analysis'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const AnalysisScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50)),
+                  _buildDashboardButton(
+                    context,
+                    icon: Icons.analytics,
+                    label: 'Analysis',
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const AnalysisScreen()),
+                    ),
                   ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDashboardButton(BuildContext context,
+      {required IconData icon,
+      required String label,
+      required VoidCallback onPressed}) {
+    return ElevatedButton.icon(
+      icon: Icon(icon, color: Colors.black),
+      label: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.amber,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 5,
       ),
     );
   }

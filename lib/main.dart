@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:truckventory/screens/add_transaction.dart';
-import 'package:truckventory/screens/home_screen.dart';
-import 'package:truckventory/screens/sales_history.dart';
+import 'package:firebase_core/firebase_core.dart'; 
 import 'firebase_options.dart';
-import 'screens/login_screen.dart'; // 👈 add this import
+import 'screens/login_screen.dart'; 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +22,7 @@ class TruckventoryApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: const LoginScreen(), // 👈 this is the change
+      home: const LoginScreen(), 
     );
   }
 }
